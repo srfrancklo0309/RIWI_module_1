@@ -14,7 +14,7 @@ def create():
 
         publication_year=int(input("Ingrese el año de publicación: \n"))
 
-        id_book={'Title':title_book, 'Autor':author_book, 'Año de publicación':publication_year}
+        books[id_book]={'Title':title_book, 'Autor':author_book, 'Año de publicación':publication_year}
 
         decision=int(input("¿Desea ingresar otro libro? \n1.Si\n0.No"))
 
