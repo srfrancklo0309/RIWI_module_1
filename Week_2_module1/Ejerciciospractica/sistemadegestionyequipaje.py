@@ -1,8 +1,6 @@
 list_passangersN=[]
 list_passangersI=[]
 
-
-
 import random
 
 while True:
@@ -65,3 +63,41 @@ while True:
                 'total_bill':4200000+price_lugagge
                 }
                 list_passangersI.append(passanger)
+
+        decision=input("\n¿Desea agregar otro pasajero?\n1.Si\n2.No\n")
+        decision=int(decision)
+
+        match decision:
+            case 1:
+                continue
+            case 2:
+                for passanger, national in list_passangersN.items():
+                    print(f"Pasajero Nacional #{passanger}:\nNombre: {national['name']}.\nDestino: Bogotá a Medellín.\nTipo de equipaje: {national['type of luggage']}.\nFecha de vuelo: {national['date']}.\nCosto total incluido equipaje: {national['total_bill']}")
+
+                for passanger, international in list_passangersI.items():
+                    print(f"Pasajero Internacional #{passanger}:\nNombre: {international['name']}.\nDestino: Bogotá a España.\nTipo de equipaje: {international['type of luggage']}.\nFecha de vuelo: {international['date']}.\nCosto total incluido equipaje: {international['total_bill']}")
+                break
+
+admins=input("\n**Admins**\n")
+admins=int(admins)
+
+match admins:
+    case 1:
+        SystemExit
+    case 2:
+        SystemExit
+    case 3:
+        numberpI=len(list_passangersI)
+        numberpN=len(list_passangersN)
+        totalpassanger=numberpI+numberpN
+
+        totalsellsN=0
+        totalsellsI=0
+
+        for passanger, national in list_passangersN.items():
+            totalsellsN=+ national['total_bill']
+
+        for passanger, international in list_passangersI.items():
+            totalsellsI=+ international['total_bill']
+
+        totalsells=totalsellsI+totalsellsN

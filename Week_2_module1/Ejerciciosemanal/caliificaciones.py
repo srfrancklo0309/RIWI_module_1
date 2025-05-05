@@ -1,16 +1,15 @@
-def validation_q(limit_q):#Funcion para validar la nota inicial
+def validation_q(note):#Funcion para validar la nota inicial
     try:#Try except para capturar errores
-        limit=int(limit_q)
-        if limit < 0 or limit>100:
+        note=int(note)
+        if note < 0 or note>100:
             print("Deber ser entre 0 y 100")
             return False
         return True
     except ValueError:
         print("Calificación no válida")
         return False
-            
 
-def qualification():#Funcion principal donde se pide la nota inicial se hace el promedio de todas las notas y define si el estudiante aprobo o reprobo
+def qualification(c_qualification):#Funcion principal donde se pide la nota inicial 
     while True:#Ciclo while para que si el usuario ingresa datos incorrectos, pida los datos hasta que sean validos
         print('-----------------------')
         limit_q=input("Ingrese una calificación de 0 a 100 donde se determine si se aprueba o reprueba una nota:\n")
@@ -18,14 +17,9 @@ def qualification():#Funcion principal donde se pide la nota inicial se hace el 
         if not validation_q(limit_q):#Llamada de la funcion validation_q
             continue
         limit_q=int(limit_q)
-        c_qualification = indent_q()#Llamada de la funcion indent y obtencion de parametro
-
         addition_q=sum(c_qualification)
         number_q=len(c_qualification)
         average_q=addition_q/number_q
-        search_q(c_qualification)
-        searchbyone(c_qualification)
-
         if average_q < limit_q:
             print('-----------------------')
             print('El estudiante reprobó.')
@@ -35,12 +29,13 @@ def qualification():#Funcion principal donde se pide la nota inicial se hace el 
         print("El estudiante aprobó.")
         print('-----------------------')
         break
+        break
 
 def search_q(c_qualification):#Funcion que busca calificaciones que son mayores a una nota ingresada pore el usuario
     while True:
         try:
             print('-----------------------')
-            value=input("Ingrese el valor por el cual quiere buscar sus notas mayores:\n")
+            value=input("Ingrese el valor por el cual quiere buscar las notas mayores al mismo:\n")
             print('-----------------------')
             value=int(value)
             c=0
@@ -50,7 +45,6 @@ def search_q(c_qualification):#Funcion que busca calificaciones que son mayores 
                     print('-----------------------')
                     print(f"Calificación {c}. {i}")
                     continue
-                break
             break
         except ValueError:
             print("Valor no válido.")
@@ -70,12 +64,32 @@ def searchbyone(c_qualification):#Funcion para buscar calificacion o calificacio
                     print('-----------------------')
                     print(f"Calificación {c}. {i}")
                     continue
-                break
             break
         except ValueError:
             print("Valor no válido.")
 
-
+def menu():#Función menú donde se hace el promedio de todas las notas y define si el estudiante aprobo o reprobo
+    c_qualification=indent_q()
+    while True:
+        try:
+            decision=input('\n¿Desea buscar alguna nota?\n1.Si\n2.No\n')
+            decision=int(decision)
+            match decision:
+                case 1:
+                    decision2=input("¿Desea buscar una nota especifica o las calificaciones mayores a un valor\n1.Nota específica\n2.Calificaciones mayores\n")
+                    decision2=int(decision2)
+                    match decision2:
+                        case 1:
+                            searchbyone(c_qualification)
+                            continue
+                        case 2:
+                            search_q(c_qualification)
+                            continue
+                case 2:
+                    qualification(c_qualification)
+                    break
+        except ValueError:
+            print("Opción no válida.")
 
 def indent_q():#Funcion para pedir todas las notas, valida las notas y las añade a una lista
     while True:
@@ -86,12 +100,21 @@ def indent_q():#Funcion para pedir todas las notas, valida las notas y las añad
             inputreplace=inputuser.replace(' ', '')#Replace usado para reemplazar los espacios agregados innceseriamente por el usuario
             qualifications=inputreplace.split(',')#Por medio del split cada que el usuario ingrese una coma el dato posterior a la coma se tomara como un dato diferente
             c_qualification=[]
+            has_invalid_notes = False
             for note in qualifications:#Ciclo for para castear todas las notas y agregarlas a una lista
+                if not validation_q(note):
+                    has_invalid_notes = True
                 note=int(note)
                 c_qualification.append(note)
+
+            if has_invalid_notes:
+                print("Por favor ingrese notas entre 0 y 100")
+                continue
+            
             return c_qualification
+        
             
         except ValueError:
             print("Calificación no válida")
 
-qualification()#Ejecución de función principal
+menu()#Ejecución de función principal
